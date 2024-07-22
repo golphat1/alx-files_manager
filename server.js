@@ -1,14 +1,15 @@
-import express from 'express';
-import controllerRouting from './routes/index';
-
+const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(express.json());
-controllerRouting(app);
+const dbClient = require('./utils/db');
+const redisClient = require('./utils/redis');
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+// Middleware and routes
+app.get('/status', (req, res) => {
+  res.status(200).send({ status: 'OK' });
 });
 
-export default app;
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Server running on port ${port}`);
+});
